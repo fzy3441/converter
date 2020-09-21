@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
 	"os/exec"
 	"strings"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 //map for converting mysql type to golang types
@@ -178,6 +179,8 @@ func (t *Table2Struct) Run() error {
 			// 字符长度大于1时
 			tableName = strings.ToUpper(tableName[0:1]) + tableName[1:]
 		}
+
+		tableName = strings.Replace(tableName, "_", "", -1)
 		depth := 1
 		structContent += "type " + structName + " struct {\n"
 		for _, v := range item {
